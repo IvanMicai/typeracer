@@ -49,6 +49,62 @@ class Room {
 
     return textList[Math.floor((Math.random() * 10))];
   }
+
+  users() {
+    return this.ranking.map(rank => rank[0]);
+  }
+
+  userExists(username) {
+    const user = this.ranking.find(rankingUser => rankingUser[0] === username);
+
+    if (user) {
+      return user[0];
+    }
+
+    return undefined;
+  }
+
+  userReady(username) {
+    if (!this.userExists(username)) {
+      return false;
+    }
+
+    this.score_board[username].status = 'ready';
+
+    return true;
+  }
+
+  userInputs(username) {
+    if (!this.userExists(username)) {
+      return undefined;
+    }
+
+    const userInputs = this.users_history.filter(input => input.username === username);
+
+    if (!userInputs) {
+      return [];
+    }
+
+    return userInputs;
+  }
+
+  userLastInput(username) {
+    const userInputs = this.userInputs(username);
+    return userInputs[userInputs.length - 1];
+  }
+
+  userJoin(username) {
+    if (!this.userExists(username)) {
+      this.ranking.push([username, 0]);
+      this.score_board[username] = {
+        score: 0,
+        correctCursor: -1,
+        status: 'waiting',
+      };
+
+      this.active_users = Object.keys(this.score_board).length;
+    }
+  }
 }
 
 exports.Room = Room;

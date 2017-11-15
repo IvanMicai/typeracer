@@ -44,4 +44,70 @@ describe('Room', () => {
       assert.equal(room.status, 'waiting');
     });
   });
+
+  describe('Add first user', () => {
+    it('should list all users in an empty room', () => {
+      assert.deepEqual(room.users(), []);
+    });
+
+    it('should find user in an empty room', () => {
+      assert.deepEqual(room.userExists('ivanmicai'), undefined);
+    });
+
+    it('should list an user_inputs in an empty room', () => {
+      assert.deepEqual(room.userInputs('ivanmicai'), undefined);
+    });
+
+    it('should list an user_last_input in an empty room', () => {
+      assert.deepEqual(room.userInputs('ivanmicai'), undefined);
+    });
+
+    it('should Add a user', () => {
+      room.userJoin('ivanmicai');
+    });
+
+    it('should list all users in a room with one user', () => {
+      assert.deepEqual(room.users(), ['ivanmicai']);
+    });
+
+    it('should find user in a room with one user', () => {
+      assert.equal(room.userExists('ivanmicai'), 'ivanmicai');
+    });
+
+    it('should find a diferent user in a room with one user', () => {
+      assert.equal(room.userExists('ghost'), undefined);
+    });
+
+    it('should find user_inputs in a room with one user', () => {
+      assert.deepEqual(room.userInputs('ivanmicai'), []);
+    });
+
+    it('should find user_last_inputs in a room with one user', () => {
+      assert.deepEqual(room.userLastInput('ivanmicai'), undefined);
+    });
+
+    it('should get room ranking in a room with one user', () => {
+      assert.deepEqual(room.ranking, [['ivanmicai', 0]]);
+    });
+
+    it('should get room score_board in a room with one user', () => {
+      const scoreBoard = {
+        ivanmicai: {
+          score: 0,
+          correctCursor: -1,
+          status: 'waiting',
+        },
+      };
+
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+  });
+
+  describe('Add duplicated user', () => {
+    it('should not duplicate the user', () => {
+      room.userJoin('ivanmicai');
+
+      assert.deepEqual(room.users(), ['ivanmicai']);
+    });
+  });
 });
