@@ -1,0 +1,31 @@
+{
+  "name": "typeracer",
+  "version": "1.0.0",
+  "description": "TypeRacer Game",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "mocha tests/functional.js",
+    "lint": "./node_modules/.bin/eslint ./models ./controllers ./tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanMicai/typeracer.git"
+  },
+  "author": "Ivan Micai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IvanMicai/typeracer/issues"
+  },
+  "homepage": "https://github.com/IvanMicai/typeracer#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "ws": "^3.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.0.1"
+  }
+}
