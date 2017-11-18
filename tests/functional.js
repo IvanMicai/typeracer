@@ -110,4 +110,52 @@ describe('Room', () => {
       assert.deepEqual(room.users(), ['ivanmicai']);
     });
   });
+
+  describe('Add duplicated user', () => {
+    it('should not duplicate the user', () => {
+      room.userJoin('ivanmicai');
+
+      assert.deepEqual(room.users(), ['ivanmicai']);
+    });
+  });
+
+  describe('Add second user', () => {
+    it('should Add a second user', () => {
+      room.userJoin('amanda');
+    });
+
+    it('should list all users in a room with two user', () => {
+      assert.deepEqual(room.users(), ['ivanmicai', 'amanda']);
+    });
+
+    it('should find user in a room with two user', () => {
+      assert.equal(room.userExists('ivanmicai'), 'ivanmicai');
+      assert.equal(room.userExists('amanda'), 'amanda');
+    });
+
+    it('should find a diferent user in a room with two user', () => {
+      assert.equal(room.userExists('ghost'), undefined);
+    });
+
+    it('should get room ranking in a room with two user', () => {
+      assert.deepEqual(room.ranking, [['ivanmicai', 0], ['amanda', 0]]);
+    });
+
+    it('should get room score_board in a room with two user', () => {
+      const scoreBoard = {
+        ivanmicai: {
+          score: 0,
+          correctCursor: -1,
+          status: 'waiting',
+        },
+        amanda: {
+          score: 0,
+          correctCursor: -1,
+          status: 'waiting',
+        },
+      };
+
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+  });
 });
