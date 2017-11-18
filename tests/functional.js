@@ -329,4 +329,111 @@ describe('Room', () => {
       assert.deepEqual(userInputs[4], userLastInput);
     });
   });
+
+  describe('Add to second user some inputs', () => {
+    it('should send the second input', () => {
+      room.newUserInput({
+        username: 'amanda',
+        cursor: 0,
+        character: 'i',
+        time: (new Date()).getTime(),
+      });
+    });
+
+    it('should userInputs equal lastInput', () => {
+      const userInputs = room.userInputs('amanda');
+      const userLastInput = room.userLastInput('amanda');
+
+      assert.deepEqual(userInputs[0], userLastInput);
+      assert.equal(room.userInputs('amanda').length, 1);
+    });
+
+    it('should second input update score_board', () => {
+      const scoreBoard = {
+        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
+        amanda: { score: 1, correctCursor: 0, status: 'running' },
+      };
+
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should send an incorrect input (incorrect cursor +1)', () => {
+      const inputResult = room.newUserInput({
+        username: 'amanda',
+        cursor: 2,
+        character: 'v',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
+        amanda: { score: 1, correctCursor: 0, status: 'running' },
+      };
+
+      assert.equal(inputResult, true);
+      assert.equal(room.userInputs('amanda').length, 2);
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should send a second input (correct)', () => {
+      const inputResult = room.newUserInput({
+        username: 'amanda',
+        cursor: 1,
+        character: 'v',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
+        amanda: { score: 2, correctCursor: 1, status: 'running' },
+      };
+
+      assert.equal(inputResult, true);
+      assert.equal(room.userInputs('amanda').length, 3);
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should send a third input (incorrect character)', () => {
+      const inputResult = room.newUserInput({
+        username: 'amanda',
+        cursor: 2,
+        character: 'n',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
+        amanda: { score: 2, correctCursor: 1, status: 'running' },
+      };
+
+      assert.equal(inputResult, true);
+      assert.equal(room.userInputs('amanda').length, 4);
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should send a fourth input (correct)', () => {
+      const inputResult = room.newUserInput({
+        username: 'amanda',
+        cursor: 2,
+        character: 'a',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
+        amanda: { score: 3, correctCursor: 2, status: 'running' },
+      };
+
+      assert.equal(inputResult, true);
+      assert.equal(room.userInputs('amanda').length, 5);
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should first user lastInput be equals fourth input', () => {
+      const userInputs = room.userInputs('amanda');
+      const userLastInput = room.userLastInput('amanda');
+
+      assert.deepEqual(userInputs[4], userLastInput);
+    });
+  });
 });

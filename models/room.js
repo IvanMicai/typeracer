@@ -149,7 +149,7 @@ class Room {
       username,
       cursor,
       character,
-      time: new Date().getTime(),
+      time: (new Date()).getTime(),
     });
 
     const userInputs = this.userInputs(username);
