@@ -105,6 +105,28 @@ class Room {
       this.active_users = Object.keys(this.score_board).length;
     }
   }
+
+  start() {
+    if (this.users().length === 0) {
+      return false;
+    }
+
+    const waitingUsers = Object.keys(this.score_board)
+      .filter(score => this.score_board[score].status === 'waiting');
+
+    if (waitingUsers.length !== 0) {
+      return false;
+    }
+
+    Object.keys(this.score_board).forEach((score) => {
+      this.score_board[score].status = 'running';
+    });
+
+    this.status = 'running';
+    this.started_at = (new Date()).getTime();
+
+    return true;
+  }
 }
 
 exports.Room = Room;
