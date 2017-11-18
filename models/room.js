@@ -127,6 +127,76 @@ class Room {
 
     return true;
   }
+
+  newUserInput(data) {
+    const {
+      username,
+      cursor,
+      character,
+    } = data;
+
+    // waiting for users ready
+    if (this.status !== 'running') {
+      return false;
+    }
+
+    // Username not found
+    if (!this.users().includes(username)) {
+      return false;
+    }
+
+    this.users_history.push({
+      username,
+      cursor,
+      character,
+      time: new Date().getTime(),
+    });
+
+    const userInputs = this.userInputs(username);
+
+    if (!userInputs) {
+      return true;
+    }
+
+    let score = 0;
+    let correctCursor = -1;
+
+    userInputs.forEach((input) => {
+      if (input.character === this.text[correctCursor + 1] && input.cursor === correctCursor + 1) {
+        score += 1;
+        correctCursor += 1;
+      }
+    });
+
+    if (correctCursor === this.text.length - 1) {
+      this.score_board[username].status = 'finished';
+    }
+
+    const finishedUsers = Object.keys(this.score_board)
+      .filter(scoreFinished => this.score_board[scoreFinished].status === 'finished');
+
+    if (finishedUsers.length === this.users().length) {
+      this.status = 'finished';
+    }
+
+    this.score_board[username] = Object.assign(this.score_board[username], { correctCursor, score });
+    const oneMinuteLater = (new Date().getTime() - (60 * 1000));
+    this.keystrokes = this.users_history.filter(key => key.time > oneMinuteLater).length;
+    this.active_since = Math.floor(((new Date()).getTime() - this.created_at) / 1000);
+    this.counter = Math.floor(((new Date()).getTime() - this.started_at) / 1000);
+    this.ranking = Object.keys(this.score_board)
+      .map(userName => [userName, this.score_board[userName].score])
+      .sort((a, b) => a.score - b.score);
+    const scoreArithmeticMean = this.ranking.reduce((sum, ranking) => sum + ranking[1], 0)
+    this.below_mean = this.ranking.reduce((sum, ranking) => {
+      if (ranking[1] < scoreArithmeticMean) {
+        return sum + 1;
+      }
+      return sum;
+    }, 0);
+
+    return true;
+  }
 }
 
 exports.Room = Room;
