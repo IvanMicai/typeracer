@@ -158,4 +158,62 @@ describe('Room', () => {
       assert.deepEqual(room.score_board, scoreBoard);
     });
   });
+
+  describe('Start the game', () => {
+    it('should not start the game with all users on waiting status', () => {
+      const scoreBoard = {
+        ivanmicai: { score: 0, correctCursor: -1, status: 'waiting' },
+        amanda: { score: 0, correctCursor: -1, status: 'waiting' },
+      };
+
+      const ranking = [
+        ['ivanmicai', 0],
+        ['amanda', 0],
+      ];
+
+      assert.equal(room.status, 'waiting');
+      assert.deepEqual(room.score_board, scoreBoard);
+      assert.deepEqual(room.ranking, ranking);
+
+      const tryStart = room.start();
+
+      assert.equal(tryStart, false);
+      assert.equal(room.status, 'waiting');
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should not start with one user ready', () => {
+      const scoreBoard = {
+        ivanmicai: { score: 0, correctCursor: -1, status: 'ready' },
+        amanda: { score: 0, correctCursor: -1, status: 'waiting' },
+      };
+
+      const ranking = [
+        ['ivanmicai', 0],
+        ['amanda', 0],
+      ];
+
+      room.userReady('ivanmicai');
+      const tryStart = room.start();
+
+      assert.equal(tryStart, false);
+      assert.equal(room.status, 'waiting');
+      assert.deepEqual(room.score_board, scoreBoard);
+      assert.deepEqual(room.ranking, ranking);
+    });
+
+    it('should start with all user ready', () => {
+      const scoreBoard = {
+        ivanmicai: { score: 0, correctCursor: -1, status: 'running' },
+        amanda: { score: 0, correctCursor: -1, status: 'running' },
+      };
+
+      room.userReady('amanda');
+      const tryStart = room.start();
+
+      assert.equal(tryStart, true);
+      assert.equal(room.status, 'running');
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+  });
 });
