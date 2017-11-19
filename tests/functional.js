@@ -420,6 +420,7 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
+
         ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
         amanda: { score: 3, correctCursor: 2, status: 'running' },
       };
@@ -434,6 +435,81 @@ describe('Room', () => {
       const userLastInput = room.userLastInput('amanda');
 
       assert.deepEqual(userInputs[4], userLastInput);
+    });
+  });
+
+  describe('First user finish the game', () => {
+    it('should change user status change to finished', () => {
+      const inputResult = room.newUserInput({
+        username: 'ivanmicai',
+        cursor: 3,
+        character: 'n',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 4, correctCursor: 3, status: 'finished' },
+        amanda: { score: 3, correctCursor: 2, status: 'running' },
+      };
+
+      const ranking = [
+        ['ivanmicai', 4],
+        ['amanda', 3],
+      ];
+
+      assert.equal(inputResult, true);
+      assert.deepEqual(room.score_board, scoreBoard);
+      assert.deepEqual(room.ranking, ranking);
+    });
+
+    it('should not change the room status', () => {
+      assert.equal(room.status, 'running');
+    });
+  });
+
+  describe('Second user finish the game', () => {
+    it('should change user status change to finished', () => {
+      const inputResult = room.newUserInput({
+        username: 'amanda',
+        cursor: 3,
+        character: 'n',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 4, correctCursor: 3, status: 'finished' },
+        amanda: { score: 4, correctCursor: 3, status: 'finished' },
+      };
+
+      assert.equal(inputResult, true);
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should update the room status', () => {
+      assert.equal(room.status, 'finished');
+    });
+  });
+
+  describe('Finished room', () => {
+    it('should not accept more inputs', () => {
+      const inputResult = room.newUserInput({
+        username: 'ivanmicai',
+        cursor: 4,
+        character: ' ',
+        time: (new Date()).getTime(),
+      });
+
+      const scoreBoard = {
+        ivanmicai: { score: 4, correctCursor: 3, status: 'finished' },
+        amanda: { score: 4, correctCursor: 3, status: 'finished' },
+      };
+
+      assert.equal(inputResult, false);
+      assert.deepEqual(room.score_board, scoreBoard);
+    });
+
+    it('should update the room status', () => {
+      assert.equal(room.status, 'finished');
     });
   });
 });
