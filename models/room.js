@@ -1,3 +1,19 @@
+/**
+* Room
+*
+* Define os dados e metodos de uma sala do jogo.
+*
+* @param {name} - nome da sala.
+* @param {active_users} - número de usuários ativos naquela sala.
+* @param {keystrokes} - Número total de teclas pressionadas no último minuto corrente naquela sala, independente de qual usuário clicou.
+* @param {active_since} - número de segundos contados desde que aquela sala existe.
+* @param {counter} - número de segundos desde o início do jogo, ao até o término (interprete esse tempo da maneira que mais faz sentido dadas tuas escolhas).
+* @param {below_mean} -o número de usuários que possuem score abaixo do score médio obtido pela media aritmética dos melhores scores de cada usuário.
+* @param {ranking} - um array no formato: [username, score] ordenado do maior score para o menor com cada usuário associado a ele.
+* @param {status} = status da sala (waiting, running, finished)
+* @param {users_status} - lista of user status
+* @param {last_minute_lead} - //nome do usuário com a melhor marca no ultimo minuto corrido.
+*/
 class Room {
   constructor({
     name = '',
@@ -104,6 +120,24 @@ class Room {
 
       this.active_users = Object.keys(this.score_board).length;
     }
+  }
+
+  inputTextValidate(cursor, character) {
+    return this.text[cursor] === character;
+  }
+
+  roomStatus() {
+    return {
+      name: this.name,
+      status: this.status,
+      active_users: this.active_users,
+      keystrokes: this.keystrokes,
+      active_since: this.active_since,
+      counter: this.counter,
+      below_mean: this.below_mean,
+      last_minute_le: this.last_minute_lead,
+      score_board: this.score_board,
+    };
   }
 
   start() {
