@@ -192,7 +192,7 @@
 
     let html = '';
     if (!currentRoom.text) {
-      return 'no text';
+      return '';
     }
 
     for (let i = 0; i < currentRoom.text.length && i <= correctCursor; i++) {
