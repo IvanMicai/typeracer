@@ -221,7 +221,7 @@ class Room {
     this.ranking = Object.keys(this.score_board)
       .map(userName => [userName, this.score_board[userName].score])
       .sort((a, b) => a.score - b.score);
-    const scoreArithmeticMean = this.ranking.reduce((sum, ranking) => sum + ranking[1], 0)
+    const scoreArithmeticMean = this.ranking.reduce((sum, ranking) => sum + ranking[1], 0);
     this.below_mean = this.ranking.reduce((sum, ranking) => {
       if (ranking[1] < scoreArithmeticMean) {
         return sum + 1;
