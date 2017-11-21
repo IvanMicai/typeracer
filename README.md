@@ -7,7 +7,7 @@ For a live demo, access the url: https://typeracer-ivanmicai.now.sh/
 It was deployed using [now](https://zeit.co/now)
 
 ## Score Calc
-`correctKeys / (lastKey - firstKey)` 
+`correctKeys / (lastKeyTime - firstKeyTime)` 
 
 ## The stack
 
