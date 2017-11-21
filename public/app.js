@@ -62,8 +62,12 @@
       ws.onerror = ws.onopen = ws.onclose = null;
       ws.close();
     }
-
-    ws = new WebSocket(`ws://${location.host}?room=${roomname}&username=${username}`);
+    if (location.protocol == 'https:') {
+      ws = new WebSocket(`wss://${location.host}?room=${roomname}&username=${username}`);
+    } else {
+      ws = new WebSocket(`ws://${location.host}?room=${roomname}&username=${username}`);
+    }
+    
 
     ws.onmessage = (e) => wsProcess(e);
     ws.onerror = () => console.log('WebSocket error');
@@ -170,11 +174,9 @@
 
   const wsProcess = (e) => {
     const data = JSON.parse(e.data)
-    console.log(data)
     if (data.type == 'status') {
       updateInterface(data)
     } else if (data.type == 'start') {
-      console.log('start hhah', data.text)
       currentRoom.text = data.text
     }
   }
