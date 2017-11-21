@@ -40,7 +40,7 @@
     const roomname = roomInput.value;
     const username = usernameInput.value;
 
-    currentRoom = JSON.parse(httpGet(`http://${location.host}/room/${roomname}/user/${username}`))
+    currentRoom = JSON.parse(httpGet(`/room/${roomname}/user/${username}`))
     updateInterface(currentRoom)
 
     wsStartup();
