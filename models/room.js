@@ -202,6 +202,8 @@ class Room {
       }
     });
 
+    score = Math.floor( ( score /((userInputs[userInputs.length -1].time - userInputs[0].time)/100000) ) );
+
     if (correctCursor === this.text.length - 1) {
       this.score_board[username].status = 'finished';
     }

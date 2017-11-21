@@ -237,8 +237,8 @@ describe('Room', () => {
 
     it('should first input update score_board', () => {
       const scoreBoard = {
-        ivanmicai: { score: 1, correctCursor: 0, status: 'running' },
-        amanda: { score: 0, correctCursor: -1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 0, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: -1, status: 'running' },
       };
 
       assert.deepEqual(room.score_board, scoreBoard);
@@ -253,8 +253,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 1, correctCursor: 0, status: 'running' },
-        amanda: { score: 0, correctCursor: -1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 0, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: -1, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -271,13 +271,13 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 2, correctCursor: 1, status: 'running' },
-        amanda: { score: 0, correctCursor: -1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 1, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: -1, status: 'running' },
       };
 
       const ranking = [
-        ['ivanmicai', 2],
-        ['amanda', 0],
+        ['ivanmicai', room.score_board.ivanmicai.score],
+        ['amanda', room.score_board.amanda.score],
       ];
 
       assert.equal(inputResult, true);
@@ -295,8 +295,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 2, correctCursor: 1, status: 'running' },
-        amanda: { score: 0, correctCursor: -1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 1, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: -1, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -313,8 +313,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
-        amanda: { score: 0, correctCursor: -1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 2, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: -1, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -350,8 +350,8 @@ describe('Room', () => {
 
     it('should second input update score_board', () => {
       const scoreBoard = {
-        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
-        amanda: { score: 1, correctCursor: 0, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 2, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 0, status: 'running' },
       };
 
       assert.deepEqual(room.score_board, scoreBoard);
@@ -366,8 +366,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
-        amanda: { score: 1, correctCursor: 0, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 2, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 0, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -384,8 +384,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
-        amanda: { score: 2, correctCursor: 1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 2, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 1, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -402,8 +402,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
-        amanda: { score: 2, correctCursor: 1, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 2, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 1, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -421,8 +421,8 @@ describe('Room', () => {
 
       const scoreBoard = {
 
-        ivanmicai: { score: 3, correctCursor: 2, status: 'running' },
-        amanda: { score: 3, correctCursor: 2, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 2, status: 'running' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 2, status: 'running' },
       };
 
       assert.equal(inputResult, true);
@@ -448,13 +448,13 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 4, correctCursor: 3, status: 'finished' },
-        amanda: { score: 3, correctCursor: 2, status: 'running' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 3, status: 'finished' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 2, status: 'running' },
       };
 
       const ranking = [
-        ['ivanmicai', 4],
-        ['amanda', 3],
+        ['ivanmicai', room.score_board.ivanmicai.score],
+        ['amanda', room.score_board.amanda.score],
       ];
 
       assert.equal(inputResult, true);
@@ -477,8 +477,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 4, correctCursor: 3, status: 'finished' },
-        amanda: { score: 4, correctCursor: 3, status: 'finished' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 3, status: 'finished' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 3, status: 'finished' },
       };
 
       assert.equal(inputResult, true);
@@ -500,8 +500,8 @@ describe('Room', () => {
       });
 
       const scoreBoard = {
-        ivanmicai: { score: 4, correctCursor: 3, status: 'finished' },
-        amanda: { score: 4, correctCursor: 3, status: 'finished' },
+        ivanmicai: { score: room.score_board.ivanmicai.score, correctCursor: 3, status: 'finished' },
+        amanda: { score: room.score_board.amanda.score, correctCursor: 3, status: 'finished' },
       };
 
       assert.equal(inputResult, false);
